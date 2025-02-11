@@ -3,7 +3,7 @@
 
 int main()
 {
-char  src_data[] ="int i = 0 ;";
+char  src_data[] ="print();";
 char *ptr_src_data =src_data;
 
 
@@ -11,6 +11,7 @@ char *ptr_src_data =src_data;
 core_tokenizer(ptr_src_data);
 
 }
+
 
 
 
