@@ -34,7 +34,9 @@ typedef struct
 typedef enum{
     KEYWORD,
     PUNTUATOR,
-    OPERATOR
+    OPERATOR,
+    INTEGERS,
+
 
 }TokensType; 
 
@@ -46,38 +48,7 @@ int compare_desc(const void *a, const void *b) {
         return strlen(*(char**)b) - strlen(*(char**)a); 
 }
 
-char*  remove_newline(char * src_data){
 
-    bool is_string=false;
-    int size =0,capacity=20;
-    char* temp_data =malloc(sizeof(char)*capacity);
-
-
-    for (int i =0 ;src_data[i]!='\0';i++){
-        if(size>=capacity){
-            capacity *=2;
-            temp_data =realloc(temp_data,sizeof(char)*capacity);
-        }
-
-
-        if(src_data[i]=='"'&&src_data[i-1]!='\\'){
-            is_string =!is_string;
-            temp_data[size++] =src_data[i];
-
-
-        }else if(src_data[i]=='\n'&& !is_string){
-
-        }else{
-            temp_data[size++] =src_data[i];
-
-        }
-
-    }   
-    return temp_data;
-
-    
-
-}
 
 
 char *remove_spaces(char *str) {
@@ -187,8 +158,8 @@ void core_tokenizer(char *ptr_src_data){
     qsort(inbuilt_functions, size_inbuilt_functions, sizeof(inbuilt_functions[0]), compare_desc);
 
     int size =0, capacity=20;
+
     char *temp_data = malloc(sizeof(char)*capacity);
-    ptr_src_data= remove_newline(ptr_src_data);
     printf("%s\n",ptr_src_data);
 
     for (int i =0; ptr_src_data[i]!='\0';i++){

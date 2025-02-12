@@ -9,8 +9,7 @@ int main()
 {
 
 
-char  src_data[] ="int(5+5);";
-char *ptr_src_data =src_data;
+char  *ptr_src_data ="int k=5+5; k=45;exit(k);";
 
 
 
