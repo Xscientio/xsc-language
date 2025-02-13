@@ -9,7 +9,7 @@ int main()
 {
 
 
-char  *ptr_src_data ="int k=5+5; k=45;exit(k);";
+char  *ptr_src_data ="int EXCEL =5;";
 
 
 

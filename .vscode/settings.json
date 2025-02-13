@@ -4,6 +4,7 @@
         "tokenizer.h": "c",
         "ctype.h": "c",
         "malloc.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "tokenization.h": "c"
     }
 }
