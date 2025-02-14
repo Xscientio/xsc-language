@@ -9,7 +9,7 @@
 
 bool is_alphabat=false;
 bool is_string=false;
-
+bool is_int =false;
 
 int token_count = 0;  
 int token_capacity = 20;    
@@ -38,7 +38,9 @@ typedef enum{
     INTEGERS,
     STRINGS,
     INBUILT_FUNCTIONS,
-    IDENTIFIERS
+    IDENTIFIERS,
+    FAULTY,
+    
     
 
 
@@ -49,6 +51,7 @@ typedef struct
 {
     TokensType type;
     char *value;
+    int *line;
     
 }TokensStored;
 
@@ -90,6 +93,8 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                          tokens[token_count].type=PUNTUATOR;
 
                         token_count++;
+                    // printf("PUNTUATORS %s\n",temp_data);
+
                             size=0;
                     }
                 }
@@ -113,6 +118,8 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                          tokens[token_count].type=INTEGERS;
 
                         token_count++;
+                    // printf("INTEGERS %s\n",temp_data);
+
                         size =0;
 
                 }
@@ -137,6 +144,8 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
                          tokens[token_count].type=OPERATOR;
 
                         token_count++;
+                    // printf("OPERATORS %s\n",temp_data);
+
                         size=0;
             
             }
@@ -159,6 +168,8 @@ int tokenize_keywords(char * ptr_src_data,char* temp_data,int size,TokensStored 
                          tokens[token_count].type=KEYWORD;
 
                         token_count++;
+                    // printf("KEYWORDS %s\n",temp_data);
+
                         size=0;
                         is_alphabat=false;
                     }
@@ -181,6 +192,8 @@ int tokenize_functions(char * ptr_src_data,char* temp_data,int size,TokensStored
 
                         token_count++;
                         size=0;
+                    // printf("FUNCTIONS %s\n",temp_data);
+
                         is_alphabat=false;
                     }
                 }}
@@ -200,6 +213,8 @@ int tokenize_identifiers(char * ptr_src_data,char* temp_data,int size,TokensStor
 
                         token_count++;
                         size=0;
+                    // printf("IDENTIFIERS %s\n",temp_data);
+
                         is_alphabat=false;
                     
                 }
@@ -220,7 +235,7 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=STRINGS;
-
+                    // printf("STRINGS %s\n",temp_data);
                         token_count++;
                         size=0;
                     size=0;
@@ -229,6 +244,26 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
         return size;
 
 }
+
+int tokenize_faulty_tokens(char * ptr_src_data,char* temp_data,int size,TokensStored *tokens){
+     if(size!=0&&!is_string){
+                        temp_data =remove_spaces(temp_data);
+                        if (token_count == token_capacity) {
+                          token_capacity *= 2;  // Double the capacity
+                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+
+                         tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
+                         strcpy(tokens[token_count].value, temp_data); 
+                         tokens[token_count].type=FAULTY;
+                    // printf("FAULTY TOKENS %s\n",temp_data);
+            
+                        token_count++;
+                        size=0;
+                    
+                }
+        return size;
+}
+
 
 void print_tokens(TokensStored *tokens){
 
@@ -247,10 +282,9 @@ void core_tokenizer(char *ptr_src_data){
     TokensStored *tokens =malloc(token_capacity * sizeof(TokensStored));
 
     char *temp_data = malloc(sizeof(char)*capacity);
-    // printf("%s\n",ptr_src_data);
-
     for (int i =0; ptr_src_data[i]!='\0';i++){
-        
+    // printf("%s\n",temp_data);
+
         temp_data[size++] =ptr_src_data[i];
         temp_data[size]='\0';
 
@@ -259,25 +293,79 @@ void core_tokenizer(char *ptr_src_data){
             capacity *=2;
             temp_data =realloc(temp_data,sizeof(char)*capacity);
         }
+         if(ptr_src_data[i]==' '){
+    // printf("%s\n",temp_data);
+
+            size=0;
+            continue;
+        }
+       
       
+
+
                
-        if(isalpha(ptr_src_data[i])!=1024||ptr_src_data[i]!='_'){
+        if(isalnum(ptr_src_data[i])!=8||ptr_src_data[i]!='_'&&!is_alphabat){
      
         
         size=   tokenize_puntuators(ptr_src_data,i,temp_data,is_string,size,tokens);
-        size=   tokenize_integers(ptr_src_data,i,temp_data,is_string,size,tokens);
         size=   tokenize_operators(ptr_src_data,i,temp_data,is_string,size,tokens);
         size=   tokenize_strings(ptr_src_data,i,temp_data,size,tokens);
 
        }
-        if(isalpha(ptr_src_data[i])==1024||ptr_src_data[i]=='_'){        
-            if(isalpha(ptr_src_data[i+1])!=1024&&ptr_src_data[i+1]!='_'){
-                is_alphabat=true;
-            }
+         if(isalnum(ptr_src_data[i])!=8&&ptr_src_data[i]!='_'&&!is_alphabat&&!is_string&&ptr_src_data[i]!=' '){
+           bool is_faulty = false;
+    
+            char *oper_punt[size_puntuators + size_operators];
+
+            for (int x = 0; x < size_puntuators; x++) {
+              oper_punt[x] = puntuators[x];
+         }
+    
+             for (int x = 0; x < size_operators; x++) {
+                 oper_punt[size_puntuators + x] = operators[x];
+             }
+            
+             char ptr_src_data[] = "=";  
+            
+             for (int x = 0; x < size_puntuators + size_operators; x++) {
+                 if (ptr_src_data[0] != oper_punt[x][0]) {
+                     is_faulty = true;
+                 }
+             }
+            
+
+
+        
+        
+        if(is_faulty==true){
+            size =tokenize_faulty_tokens(ptr_src_data,temp_data,size,tokens);
+
+        }
+        
+        }
+        if(isdigit(temp_data[0])==2048){
+            size=tokenize_integers(ptr_src_data,i,temp_data,is_string,size,tokens);
+            continue;
+        }
+    
+        if(!is_string){
+        if(isalnum(ptr_src_data[i])==8||ptr_src_data[i]=='_'){        
+            if(isalnum(ptr_src_data[i+1])!=8&&ptr_src_data[i+1]!='_'){
+                    is_alphabat=true;
+     }
+
+            }}
+             if(is_alphabat){
            size =tokenize_keywords(ptr_src_data,temp_data,size,tokens);
            size =tokenize_functions(ptr_src_data,temp_data,size,tokens);
            size =tokenize_identifiers(ptr_src_data,temp_data,size,tokens);
-            }}
+ }
+
+
+
+    }   
+
+
     
     print_tokens(tokens);
     
