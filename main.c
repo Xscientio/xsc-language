@@ -9,7 +9,7 @@ int main()
 {
 
 
-char  *ptr_src_data ="int EXCEL =5;";
+char  *ptr_src_data ="int EXCEL_hsfa74 =\"5\";";
 
 
 

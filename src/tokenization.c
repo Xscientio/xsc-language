@@ -213,7 +213,6 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                 if(!is_string){
                         temp_data =remove_spaces(temp_data);
 
-                    printf("STRINGS %s\n",temp_data);
                     if (token_count == token_capacity) {
                           token_capacity *= 2;  // Double the capacity
                         tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
