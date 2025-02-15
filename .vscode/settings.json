@@ -5,6 +5,8 @@
         "ctype.h": "c",
         "malloc.h": "c",
         "stdlib.h": "c",
-        "tokenization.h": "c"
+        "tokenization.h": "c",
+        "read_file.h": "c",
+        "string.h": "c"
     }
 }

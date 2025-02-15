@@ -9,11 +9,11 @@
 
 bool is_alphabat=false;
 bool is_string=false;
-bool is_int =false;
 
 int token_count = 0;  
 int token_capacity = 20;    
-
+int line_no =1; 
+int string_line_no =0;
 
 char *keywords[]= {"int"} ;
 char *puntuators[]={"(",")",";","."};
@@ -29,7 +29,7 @@ int size_integers =sizeof(integers)/sizeof(integers[0]);
 int size_inbuilt_functions =sizeof(inbuilt_functions)/sizeof(inbuilt_functions[0]);
 
 
-
+char *list_token_type[8] ={"KEYWORD","PUNTUTATOR","OPERATOR","INTEGERS","STRINGS","INBUILT_FUNCTIONS","IDENTIFIERS","FAULTY"};
 
 typedef enum{
     KEYWORD,
@@ -51,7 +51,8 @@ typedef struct
 {
     TokensType type;
     char *value;
-    int *line;
+    int line;
+    int length ;
     
 }TokensStored;
 
@@ -91,6 +92,9 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=PUNTUATOR;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
 
                         token_count++;
                     // printf("PUNTUATORS %s\n",temp_data);
@@ -116,6 +120,9 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=INTEGERS;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
 
                         token_count++;
                     // printf("INTEGERS %s\n",temp_data);
@@ -142,6 +149,9 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=OPERATOR;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
 
                         token_count++;
                     // printf("OPERATORS %s\n",temp_data);
@@ -166,6 +176,9 @@ int tokenize_keywords(char * ptr_src_data,char* temp_data,int size,TokensStored 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=KEYWORD;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
 
                         token_count++;
                     // printf("KEYWORDS %s\n",temp_data);
@@ -189,6 +202,9 @@ int tokenize_functions(char * ptr_src_data,char* temp_data,int size,TokensStored
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=INBUILT_FUNCTIONS;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+                        
 
                         token_count++;
                         size=0;
@@ -210,6 +226,9 @@ int tokenize_identifiers(char * ptr_src_data,char* temp_data,int size,TokensStor
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=IDENTIFIERS;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
 
                         token_count++;
                         size=0;
@@ -235,10 +254,15 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=STRINGS;
+                         tokens[token_count].line=string_line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
                     // printf("STRINGS %s\n",temp_data);
                         token_count++;
                         size=0;
                     size=0;
+                }else{
+                    string_line_no =line_no;
                 }
         }
         return size;
@@ -255,6 +279,10 @@ int tokenize_faulty_tokens(char * ptr_src_data,char* temp_data,int size,TokensSt
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=FAULTY;
+                         tokens[token_count].line=line_no;
+                         tokens[token_count].length=strlen(temp_data);
+
+
                     // printf("FAULTY TOKENS %s\n",temp_data);
             
                         token_count++;
@@ -266,13 +294,16 @@ int tokenize_faulty_tokens(char * ptr_src_data,char* temp_data,int size,TokensSt
 
 
 void print_tokens(TokensStored *tokens){
+    printf("\n");
 
     for (int i =0;i<token_count;i++)
     {
-        printf("type %d , value %s\n",tokens[i].type,tokens[i].value);
+        printf("Token type:\033[1;33m%s\033[0m\nToken line:\033[1;36m%d\033[0m\nToken Length:\033[1;32m%d\033[0m\nToken value: \033[1;35m%s\033[0m\n---------------------------------\n",list_token_type[tokens[i].type],tokens[i].line,tokens[i].length,tokens[i].value);
     }
 
 }
+
+
 
 void core_tokenizer(char *ptr_src_data){  
 
@@ -283,7 +314,6 @@ void core_tokenizer(char *ptr_src_data){
 
     char *temp_data = malloc(sizeof(char)*capacity);
     for (int i =0; ptr_src_data[i]!='\0';i++){
-    // printf("%s\n",temp_data);
 
         temp_data[size++] =ptr_src_data[i];
         temp_data[size]='\0';
@@ -294,13 +324,26 @@ void core_tokenizer(char *ptr_src_data){
             temp_data =realloc(temp_data,sizeof(char)*capacity);
         }
          if(ptr_src_data[i]==' '){
-    // printf("%s\n",temp_data);
 
             size=0;
             continue;
         }
-       
-      
+        if(ptr_src_data[i]=='\n'){
+            if(!is_string){
+                size=0;
+            line_no++;
+            continue;
+            }if(is_string){
+                
+                line_no++;
+            }
+           
+        }
+      if(ptr_src_data[i]!='"'&&is_string&&ptr_src_data[i+1]=='\0'){
+        is_string=false;
+        size =tokenize_faulty_tokens(ptr_src_data,temp_data,size,tokens);
+        continue;
+      }
 
 
                
