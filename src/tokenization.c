@@ -29,11 +29,15 @@ int line_no =1;
 int string_line_no =0;
 
 // Tokens  
-char *keywords[]= {"int"} ;
+char *keywords[]= {"int","bool","dynamic","str","void","char","double","float","let","var","typedef","list","tuple","dict","set","map","array","boolean","string","number","dictionary","integers",
+"while","for","if","else","else if","continue","break","case","switch","do",
+"class","enum","struct","def","function","func","fun","return"
+
+} ;
 char *puntuators[]={"(",")",";","."};
 char *operators[]={"=","+","-","*","/"};
 char *integers[]={"0","1","2","3","4","5","6","7","8","9"};
-char *inbuilt_functions[]={"print","printf"};
+char *inbuilt_functions[]={"output","input"};
 
 // Tokens sizes
 int size_keywords =sizeof(keywords)/sizeof(keywords[0]);
