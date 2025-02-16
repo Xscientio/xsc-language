@@ -19,6 +19,7 @@
 #include "include/tokenization.h"
 #include "include/read_file.h"
 
+ 
 
 // This is the starting point this where the journey began
 void main(){
@@ -29,6 +30,7 @@ char * ptr_src_data =core_read_file("example/main.xsc");  // Reading the data fr
 
 
 core_tokenizer(ptr_src_data); // Passing extracted source data for tokenization as a pointer
+free(ptr_src_data);
 
   clock_t end_time = clock();
 
