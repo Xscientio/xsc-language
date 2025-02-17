@@ -132,9 +132,7 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                     if((ptr_src_data[i]==puntuators[k][0])&&!is_string){
                         temp_data =remove_spaces(temp_data);
 
-                            if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                           
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -171,10 +169,7 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                 if(ptr_src_data[i]==integers[k][0]&&!is_string){
                         temp_data =remove_spaces(temp_data);
 
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
-
+                        
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=INTEGERS;
@@ -211,10 +206,7 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
            
                         temp_data =remove_spaces(temp_data);
 
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
-
+                       
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=OPERATOR;
@@ -247,9 +239,7 @@ int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
                 for(int x =0; x<size_keywords;x++){
                     if(strcmp(temp_data,keywords[x])==0){
 
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                         tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                      
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -282,9 +272,7 @@ int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
                 
                 for(int x =0; x<size_inbuilt_functions;x++){
                     if(strcmp(temp_data,inbuilt_functions[x])==0){
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                        
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -315,9 +303,7 @@ int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
 int tokenize_identifiers(char* temp_data,int size,TokensStored *tokens){
      if(is_alnum){
                         temp_data =remove_spaces(temp_data);
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                      
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -354,9 +340,7 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                 if(!is_string){
                         temp_data =remove_spaces(temp_data);
 
-                    if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                    
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -389,9 +373,7 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
 int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
      if(size!=0&&!is_string){
                         temp_data =remove_spaces(temp_data);
-                        if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+                      
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
@@ -451,6 +433,9 @@ void core_tokenizer(char *ptr_src_data){
     // Looping the data
     for (int i =0; ptr_src_data[i]!='\0';i++){
 
+        if (token_count == token_capacity) {
+                          token_capacity *= 2;  // Double the capacity
+                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
         temp_data[size++] =ptr_src_data[i]; // Adding data in temp_data
         temp_data[size]='\0';
 
