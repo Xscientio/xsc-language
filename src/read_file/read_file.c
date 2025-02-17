@@ -14,7 +14,7 @@
 #include <stdbool.h>
 
 // Include files
-#include "../include/read_file.h"
+#include "../include/read_file/read_file.h"
 
 
 /***************************************************************

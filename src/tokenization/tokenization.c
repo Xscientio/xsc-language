@@ -16,7 +16,8 @@
 #include <stdlib.h>
 
 // Include files
-#include "../include/tokenization.h"
+#include "../include/tokenization/tokenization.h"
+#include "../include/token_value/token_value.h"
 
 
 // Global variable 
@@ -28,56 +29,12 @@ int token_capacity = 20;
 int line_no =1; 
 int string_line_no =0;
 
-// Tokens  
-char *keywords[]= {"int","bool","dynamic","str","void","char","double","float","let","var","typedef","list","tuple","dict","set","map","array","boolean","string","number","dictionary","integers",
-"while","for","if","else","else if","continue","break","case","switch","do",
-"class","enum","struct","def","function","func","fun","return"
 
-} ;
-char *puntuators[]={"(",")",";",".","{","}","[","]",","};
-char *operators[]={"=","+","-","*","/"};
-char *integers[]={"0","1","2","3","4","5","6","7","8","9"};
-char *inbuilt_functions[]={"output","input"};
 
-// Tokens sizes
-int size_keywords =sizeof(keywords)/sizeof(keywords[0]);
-int size_puntuators =sizeof(puntuators)/sizeof(puntuators[0]);
-int size_operators =sizeof(operators)/sizeof(operators[0]);
-int size_integers =sizeof(integers)/sizeof(integers[0]);
-int size_inbuilt_functions =sizeof(inbuilt_functions)/sizeof(inbuilt_functions[0]);
 
 // Types of tokens
 char *list_token_type[8] ={"KEYWORD","PUNTUTATOR","OPERATOR","INTEGERS","STRINGS","INBUILT_FUNCTIONS","IDENTIFIERS","FAULTY"};
 
-typedef enum{
-    KEYWORD,
-    PUNTUATOR,
-    OPERATOR,
-    INTEGERS,
-    STRINGS,
-    INBUILT_FUNCTIONS,
-    IDENTIFIERS,
-    FAULTY,
-
-}TokensType; 
-
-/***************************************************************
- * Struct: TokensStored
- * Purpose: To store extracted tokens.
- * Fields:
- *    TokensType : Type of token being stored it a typedef enum and store as int.
- *    char *value: Value of token dynamically allocates the memory.
- *    int line   : To store the line reference of the token.
- *    int length   : To store the length of the token for future purposes.
- ***************************************************************/
-typedef struct 
-{
-    TokensType type;
-    char *value;
-    int line;
-    int length ;
-    
-}TokensStored;
 
 
 /***************************************************************

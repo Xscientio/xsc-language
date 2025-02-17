@@ -16,8 +16,8 @@
 #include <time.h>
 
 // Include files
-#include "include/tokenization.h"
-#include "include/read_file.h"
+#include "include/tokenization/tokenization.h"
+#include "include/read_file/read_file.h"
 
  
 
