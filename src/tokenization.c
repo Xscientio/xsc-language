@@ -34,7 +34,7 @@ char *keywords[]= {"int","bool","dynamic","str","void","char","double","float","
 "class","enum","struct","def","function","func","fun","return"
 
 } ;
-char *puntuators[]={"(",")",";","."};
+char *puntuators[]={"(",")",";",".","{","}","[","]",","};
 char *operators[]={"=","+","-","*","/"};
 char *integers[]={"0","1","2","3","4","5","6","7","8","9"};
 char *inbuilt_functions[]={"output","input"};
@@ -399,7 +399,6 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
  * Description: Just for debugging.
  ***************************************************************/
 void print_tokens(TokensStored *tokens){
-    printf("\n");
 
     for (int i =0;i<token_count;i++)
     {
@@ -434,8 +433,8 @@ void core_tokenizer(char *ptr_src_data){
     for (int i =0; ptr_src_data[i]!='\0';i++){
 
         if (token_count == token_capacity) {
-                          token_capacity *= 2;  // Double the capacity
-                        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
+        token_capacity *= 2;  // Double the capacity
+        tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
         temp_data[size++] =ptr_src_data[i]; // Adding data in temp_data
         temp_data[size]='\0';
 
