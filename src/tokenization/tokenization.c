@@ -18,6 +18,7 @@
 // Include files
 #include "../include/tokenization/tokenization.h"
 #include "../include/token_value/token_value.h"
+#include "../include/debug/debug.h"
 
 
 // Global variable 
@@ -32,8 +33,6 @@ int string_line_no =0;
 
 
 
-// Types of tokens
-char *list_token_type[8] ={"KEYWORD","PUNTUTATOR","OPERATOR","INTEGERS","STRINGS","INBUILT_FUNCTIONS","IDENTIFIERS","FAULTY"};
 
 
 
@@ -348,21 +347,7 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
         return size;
 }
 
-/***************************************************************
- * Function: print_tokens
- * Parameters: 
- *    TokensStored *tokens: Where the tokens will be stored.
- * Return Value: null
- * Description: Just for debugging.
- ***************************************************************/
-void print_tokens(TokensStored *tokens){
 
-    for (int i =0;i<token_count;i++)
-    {
-        printf("Token type:\033[1;33m%s\033[0m\nToken line:\033[1;36m%d\033[0m\nToken Length:\033[1;32m%d\033[0m\nToken value: \033[1;35m%s\033[0m\n---------------------------------\n",list_token_type[tokens[i].type],tokens[i].line,tokens[i].length,tokens[i].value);
-    }
-
-}
 
 /***************************************************************
  * Function: core_tokenizer
@@ -492,10 +477,9 @@ void core_tokenizer(char *ptr_src_data){
  }
 
     }   
-
-
+    
     // Debugging purposes
-    print_tokens(tokens);
+    // print_tokens(tokens,token_count);
     
 };
 

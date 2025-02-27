@@ -18,6 +18,7 @@
 // Include files
 #include "include/tokenization/tokenization.h"
 #include "include/read_file/read_file.h"
+#include "include/parsing/parsing.h"
 
  
 
@@ -35,7 +36,6 @@ printf("Too less arguments\n");
 exit(0);
 }
 if (access(argv[1], F_OK) == 0) {
-        printf("File exists.\n");
     } else {
         printf("File does not exist.\n");
         exit(0);
@@ -45,6 +45,7 @@ char * ptr_src_data =core_read_file(argv[1]);  // Reading the data from the sour
 
 core_tokenizer(ptr_src_data); // Passing extracted source data for tokenization as a pointer
 free(ptr_src_data);
+
 
   clock_t end_time = clock();
 
