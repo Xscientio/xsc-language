@@ -1,10 +1,19 @@
 #pragma once
 
+extern char *variable_keywords[];
+
+extern int size_variable_keywords;
+
+
+
 extern char *keywords[] ;
 extern char *puntuators[];
 extern char *operators[];
 extern char *integers[];
 extern char *inbuilt_functions[];
+
+
+
 
 extern int size_keywords ;
 extern int size_puntuators ;
@@ -12,6 +21,8 @@ extern int size_operators ;
 extern int size_integers ;
 extern int size_inbuilt_functions;
 
+
+extern int token_count;
 /***************************************************************
  * Enum: TokensType
  * Purpose: To represent the type of token (e.g., keyword, operator, etc.)
@@ -45,5 +56,7 @@ typedef struct
     int line;
     int length ;
     
+    
 }TokensStored;
 
+extern TokensStored* tokens;

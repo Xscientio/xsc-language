@@ -19,6 +19,7 @@
 #include "include/tokenization/tokenization.h"
 #include "include/read_file/read_file.h"
 #include "include/parsing/parsing.h"
+#include "include/debug/debug.h"
 
  
 
@@ -45,7 +46,7 @@ char * ptr_src_data =core_read_file(argv[1]);  // Reading the data from the sour
 
 core_tokenizer(ptr_src_data); // Passing extracted source data for tokenization as a pointer
 free(ptr_src_data);
-
+core_parser();
 
   clock_t end_time = clock();
 
