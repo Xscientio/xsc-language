@@ -1,6 +1,1 @@
-if ( int i =0; i< k.length; i++) {
-    print(k);
-    
-}else{
-    print("No");
-}
+int x= 2+2;

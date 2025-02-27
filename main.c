@@ -22,7 +22,14 @@
  
 
 // This is the starting point this where the journey began
-void main(){
+void main(int argc, char *argv[]){
+
+
+for (int i =0; i<argc ; i++){
+
+    printf("Argument %d: %s\n", i, argv[i]);
+
+}
 
 clock_t start_time = clock();
 
