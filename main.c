@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-
+#include <unistd.h>
 // Include files
 #include "include/tokenization/tokenization.h"
 #include "include/read_file/read_file.h"
@@ -23,17 +23,24 @@
 
 // This is the starting point this where the journey began
 void main(int argc, char *argv[]){
-
-
-for (int i =0; i<argc ; i++){
-
-    printf("Argument %d: %s\n", i, argv[i]);
-
-}
-
 clock_t start_time = clock();
 
-char * ptr_src_data =core_read_file("example/main.xsc");  // Reading the data from the source file
+if(argv[2]!= NULL){
+printf("Too many arguments\n");
+exit(0);
+
+} 
+if(argv[1]== NULL){
+printf("Too less arguments\n");
+exit(0);
+}
+if (access(argv[1], F_OK) == 0) {
+        printf("File exists.\n");
+    } else {
+        printf("File does not exist.\n");
+        exit(0);
+    }
+char * ptr_src_data =core_read_file(argv[1]);  // Reading the data from the source file
 
 
 core_tokenizer(ptr_src_data); // Passing extracted source data for tokenization as a pointer
