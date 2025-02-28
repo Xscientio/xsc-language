@@ -24,20 +24,69 @@ typedef enum{
     KEYWORD,
     PUNTUATOR,
     OPERATOR,
-    INTEGERS,
-    STRINGS,
-    INBUILT_FUNCTIONS,
-    IDENTIFIERS,
+    INTEGER,
+    STRING,
+    INBUILT_FUNCTION,
+    IDENTIFIER,
     FAULTY,
 
 }TokensType; 
+
+/***************************************************************
+ * Enum: TokensSubType
+ * Purpose: To represent the sub token (e.g., RightParenthesis, AssigmentOperator, etc.)
+ ***************************************************************/
+typedef enum{
+    USR_IDENTIFIER,
+    USR_STRING,
+    USR_INTEGER,
+    USR_FAULT,
+
+
+    COLON,
+    RIGHT_PARENTHESIS,
+    LEFT_PARENTHESIS,
+    LEFT_CURLY_BRACKETS,
+    RIGHT_CURLY_BRACKETS,
+    LEFT_SQUARE_BRACKETS,
+    RIGHT_SQUARE_BRACKETS,
+    DOT,
+    COMMA,
+
+
+    FORWARD_SLASH,
+    PLUS,
+    ASTERISK,
+    EQUAL,
+    MINUS,
+
+
+    IF,
+    ELSE,
+    ELIF,
+    WHILE,
+    BREAK,
+    TRY,
+    EXCEPT,
+
+
+    INT,
+    STR,
+
+
+    OUTPUT,
+    INPUT
+
+
+}TokensSubType; 
 
 
 /***************************************************************
  * Struct: TokensStored
  * Purpose: To store extracted tokens.
  * Fields:
- *    TokensType : Type of token being stored it a typedef enum and store as int.
+ *    TokensType type : Type of token being stored it a typedef enum and store as int.
+ *    TokensSubType subtype: Sub type of token being stored it a typedef enum and store as int.
  *    char *value: Value of token dynamically allocates the memory.
  *    int line   : To store the line reference of the token.
  *    int length   : To store the length of the token for future purposes.
@@ -45,9 +94,12 @@ typedef enum{
 typedef struct 
 {
     TokensType type;
+    TokensSubType subtype;
     char *value;
     int line;
     int length ;
+    int start_point;
+    int end_point;
     
 }TokensStored;
 

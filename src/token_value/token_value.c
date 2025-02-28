@@ -5,6 +5,8 @@
 char *variable_keywords[]= {"int","str"} ;
 
 //Sub_token sizes
+int size_variable_keywords =sizeof(variable_keywords)/sizeof(variable_keywords[0]);
+
 
 // Tokens  
 char *keywords[]= {"int","str"} ;

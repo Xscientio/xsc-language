@@ -30,7 +30,7 @@ int token_count = 0;
 int token_capacity = 20;    
 int line_no =1; 
 int string_line_no =0;
-
+int token_reference=0;
 
 
 
@@ -84,6 +84,33 @@ char *remove_spaces(char *str) {
  * Return Value: 
  *    int : Return size to reset the values.
  ***************************************************************/
+TokensSubType puntuators_sub_type(char * temp_data){
+    if(strcmp(temp_data,"(")==0){
+        return LEFT_PARENTHESIS;
+    }else if(strcmp(temp_data,")")==0){
+        return RIGHT_PARENTHESIS;
+
+    }else if(strcmp(temp_data,"{")==0){
+        return LEFT_CURLY_BRACKETS;
+
+    }
+    else if(strcmp(temp_data,"}")==0){
+        return RIGHT_CURLY_BRACKETS;
+
+    }else if(strcmp(temp_data,"[")==0){
+        return LEFT_SQUARE_BRACKETS;
+
+    }else if(strcmp(temp_data,"]")==0){
+        return RIGHT_SQUARE_BRACKETS;
+
+    }else if(strcmp(temp_data,".")==0){
+        return DOT;
+    }else if(strcmp(temp_data,";")==0){
+        return COLON;
+    }else if(strcmp(temp_data,",")==0){
+        return COMMA;
+    }
+}
 int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_string,int size,TokensStored *tokens){
             for (int k=0 ; k<size_puntuators;k++){
                     if((ptr_src_data[i]==puntuators[k][0])&&!is_string){
@@ -95,7 +122,11 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=PUNTUATOR;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=puntuators_sub_type(temp_data);
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
+
 
 
                         token_count++;
@@ -119,6 +150,7 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
  * Return Value: 
  *    int : Return size to reset the values.
  ***************************************************************/
+
 int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,int size,TokensStored *tokens){
       
         for (int k =0; k<size_integers;k++){
@@ -129,9 +161,12 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                         
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
-                         tokens[token_count].type=INTEGERS;
+                         tokens[token_count].type=INTEGER;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=USR_INTEGER;
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
 
                         token_count++;
@@ -157,6 +192,24 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
  * Return Value: 
  *    int : Return size to reset the values.
  ***************************************************************/
+TokensSubType operators_sub_type(char * temp_data){
+    if(strcmp(temp_data,"=")==0){
+        return EQUAL;
+    }else if(strcmp(temp_data,"+")==0){
+        return PLUS;
+
+    }else if(strcmp(temp_data,"-")==0){
+        return MINUS;
+
+    }
+    else if(strcmp(temp_data,"/")==0){
+        return FORWARD_SLASH;
+
+    }else if(strcmp(temp_data,"*")==0){
+        return ASTERISK;
+
+    }
+}
 int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string,int size,TokensStored *tokens){
        for (int k=0;k<size_operators;k++){
             if(ptr_src_data[i]==operators[k][0]&&!is_string){
@@ -168,7 +221,10 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=OPERATOR;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=operators_sub_type(temp_data);
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
 
                         token_count++;
@@ -190,6 +246,14 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
  * Return Value: 
  *    int : Return size to reset the values.
  ***************************************************************/
+TokensSubType keywords_sub_type(char * temp_data){
+    if(strcmp(temp_data,"int")==0){
+        return INT;
+    }else if(strcmp(temp_data,"str")==0){
+        return STR;
+
+    }
+}
 int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
        if(is_alnum){
                 
@@ -202,7 +266,10 @@ int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=KEYWORD;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=keywords_sub_type(temp_data);
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
 
                         token_count++;
@@ -224,6 +291,14 @@ int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
  * Return Value: 
  *    int : Return size to reset the values.
  ***************************************************************/
+TokensSubType inbuilt_functions_sub_type(char * temp_data){
+    if(strcmp(temp_data,"output")==0){
+        return OUTPUT;
+    }else if(strcmp(temp_data,"input")==0){
+        return INPUT;
+
+    }
+}
 int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
       if(is_alnum){
                 
@@ -233,9 +308,12 @@ int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
-                         tokens[token_count].type=INBUILT_FUNCTIONS;
+                         tokens[token_count].type=INBUILT_FUNCTION;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=inbuilt_functions_sub_type(temp_data);
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
                         
 
                         token_count++;
@@ -264,9 +342,12 @@ int tokenize_identifiers(char* temp_data,int size,TokensStored *tokens){
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
-                         tokens[token_count].type=IDENTIFIERS;
+                         tokens[token_count].type=IDENTIFIER;
                          tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=USR_IDENTIFIER;
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
 
                         token_count++;
@@ -301,9 +382,12 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
 
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
-                         tokens[token_count].type=STRINGS;
+                         tokens[token_count].type=STRING;
                          tokens[token_count].line=string_line_no;
+                         tokens[token_count].subtype=USR_STRING;
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
                     // printf("STRINGS %s\n",temp_data);
                         token_count++;
@@ -335,8 +419,10 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].value = (char *)malloc(strlen(temp_data) + 1); 
                          strcpy(tokens[token_count].value, temp_data); 
                          tokens[token_count].type=FAULTY;
-                         tokens[token_count].line=line_no;
+                         tokens[token_count].subtype=USR_FAULT;
                          tokens[token_count].length=strlen(temp_data);
+                         tokens[token_count].start_point=token_reference-strlen(temp_data);
+                         tokens[token_count].end_point=token_reference-1;
 
 
                     // printf("FAULTY TOKENS %s\n",temp_data);
@@ -374,7 +460,8 @@ void core_tokenizer(char *ptr_src_data){
     
     // Looping the data
     for (int i =0; ptr_src_data[i]!='\0';i++){
-
+        // printf("%s\n",temp_data);
+        token_reference=i+2;
         if (token_count == token_capacity) {
         token_capacity *= 2;  // Double the capacity
         tokens = (TokensStored *)realloc(tokens, token_capacity * sizeof(TokensStored));}
@@ -391,7 +478,6 @@ void core_tokenizer(char *ptr_src_data){
 
         // Omits spaces
          if(ptr_src_data[i]==' '&&!is_string){
-
             size=0;
             continue;
         }
@@ -483,6 +569,7 @@ void core_tokenizer(char *ptr_src_data){
     // print_tokens(tokens,token_count);
 
     //Sent for parsing
+    free(temp_data);
     core_parser(tokens,token_count);
     
 };
