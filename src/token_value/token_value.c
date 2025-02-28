@@ -1,5 +1,11 @@
 #include "../include/token_value/token_value.h"
 #include <stdlib.h>
+
+//Sub-Token
+char *variable_keywords[]= {"int","str"} ;
+
+//Sub_token sizes
+
 // Tokens  
 char *keywords[]= {"int","str"} ;
 char *puntuators[]={"(",")",";",".","{","}","[","]",","};

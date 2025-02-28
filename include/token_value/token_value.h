@@ -1,5 +1,9 @@
 #pragma once
 
+extern char *variable_keywords[] ;
+extern int size_variable_keywords ;
+
+
 extern char *keywords[] ;
 extern char *puntuators[];
 extern char *operators[];

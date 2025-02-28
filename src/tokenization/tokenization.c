@@ -19,6 +19,7 @@
 #include "../include/tokenization/tokenization.h"
 #include "../include/token_value/token_value.h"
 #include "../include/debug/debug.h"
+#include "../include/parsing/parsing.h"
 
 
 // Global variable 
@@ -480,6 +481,9 @@ void core_tokenizer(char *ptr_src_data){
     
     // Debugging purposes
     // print_tokens(tokens,token_count);
+
+    //Sent for parsing
+    core_parser(tokens,token_count);
     
 };
 
