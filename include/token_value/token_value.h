@@ -96,6 +96,7 @@ typedef struct
     TokensType type;
     TokensSubType subtype;
     char *value;
+    int column;
     int line;
     int length ;
     int start_point;

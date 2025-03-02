@@ -30,7 +30,6 @@ void keyword_distributor(){
 
 
 void core_parser(TokensStored* tokens,int token_count){
-printf("%d",token_count);
 print_tokens(tokens,token_count);
 tokens_stored=tokens;
 total_tokens =token_count;

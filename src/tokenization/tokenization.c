@@ -31,6 +31,7 @@ int token_capacity = 20;
 int line_no =1; 
 int string_line_no =0;
 int token_reference=0;
+int token_column_reference =1;
 
 
 
@@ -126,10 +127,12 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
 
 
 
                         token_count++;
+                        token_column_reference++;
                     // printf("PUNTUATORS %s\n",temp_data);
 
                             size=0;
@@ -167,9 +170,13 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
 
                         token_count++;
+                        token_column_reference++;
+
                     // printf("INTEGERS %s\n",temp_data);
 
                         size =0;
@@ -225,9 +232,13 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
 
                         token_count++;
+                        token_column_reference++;
+
                     // printf("OPERATORS %s\n",temp_data);
 
                         size=0;
@@ -270,9 +281,13 @@ int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
 
                         token_count++;
+                        token_column_reference++;
+
                     // printf("KEYWORDS %s\n",temp_data);
 
                         size=0;
@@ -314,9 +329,13 @@ int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
                         
 
                         token_count++;
+                        token_column_reference++;
+
                         size=0;
                     // printf("FUNCTIONS %s\n",temp_data);
 
@@ -348,9 +367,13 @@ int tokenize_identifiers(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
 
                         token_count++;
+                        token_column_reference++;
+
                         size=0;
                     // printf("IDENTIFIERS %s\n",temp_data);
 
@@ -388,9 +411,13 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
                     // printf("STRINGS %s\n",temp_data);
                         token_count++;
+                        token_column_reference++;
+
                         size=0;
                     size=0;
                 }else{
@@ -423,11 +450,15 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].length=strlen(temp_data);
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
+                         tokens[token_count].column=token_column_reference;
+
 
 
                     // printf("FAULTY TOKENS %s\n",temp_data);
             
                         token_count++;
+                        token_column_reference++;
+
                         size=0;
                     
                 }
@@ -486,9 +517,11 @@ void core_tokenizer(char *ptr_src_data){
         if(ptr_src_data[i]=='\n'){
             if(!is_string){
                 size=0;
+                token_column_reference=1;
             line_no++;
             continue;
             }if(is_string){
+                token_column_reference=1;
                 
                 line_no++;
             }

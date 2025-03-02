@@ -51,7 +51,7 @@ void print_tokens(TokensStored *tokens,int token_count){
 
     for (int i =0;i<token_count;i++)
     {
-        printf("Token type:\033[1;33m%s\033[0m\nToken Sub type:\033[1;31m%s\033[0m\nToken Start:\033[1;36m%d\033[0m\nToken End:\033[1;36m%d\033[0m\nToken line:\033[1;36m%d\033[0m\nToken Length:\033[1;32m%d\033[0m\nToken value: \033[1;35m%s\033[0m\n---------------------------------\n",list_token_type[tokens[i].type],list_token_sub_type[tokens[i].subtype],tokens[i].start_point,tokens[i].end_point,tokens[i].line,tokens[i].length,tokens[i].value);
+        printf("Token type:\033[1;33m%s\033[0m\nToken Sub type:\033[1;31m%s\033[0m\nToken Column No:\033[1;36m%d\033[0m\nToken Start:\033[1;36m%d\033[0m\nToken End:\033[1;36m%d\033[0m\nToken line:\033[1;36m%d\033[0m\nToken Length:\033[1;32m%d\033[0m\nToken value: \033[1;35m%s\033[0m\n---------------------------------\n",list_token_type[tokens[i].type],list_token_sub_type[tokens[i].subtype],tokens[i].column,tokens[i].start_point,tokens[i].end_point,tokens[i].line,tokens[i].length,tokens[i].value);
     }
 
 }
