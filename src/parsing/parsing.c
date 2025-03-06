@@ -20,11 +20,6 @@ void variable_initilize_parser(){
 
 void keyword_distributor(){
     // print_tokens(tokens_stored,total_tokens);
-    for (int i =0 ;i<size_variable_keywords;i++){
-    if(strcmp(tokens_stored[sel_token].value,variable_keywords[i])==0 ){
-        variable_initilize_parser();
-    }
-    }
 }
 
 

@@ -1,11 +1,6 @@
 #include "../include/token_value/token_value.h"
 #include <stdlib.h>
 
-//Sub-Token
-char *variable_keywords[]= {"int","str"} ;
-
-//Sub_token sizes
-int size_variable_keywords =sizeof(variable_keywords)/sizeof(variable_keywords[0]);
 
 
 // Tokens  
