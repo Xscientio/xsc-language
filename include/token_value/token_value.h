@@ -66,6 +66,7 @@ typedef enum{
     ELIF,
     WHILE,
     BREAK,
+    CONTINUE,
     TRY,
     EXCEPT,
 

@@ -41,6 +41,7 @@ void print_tokens(TokensStored *tokens,int token_count){
     "BREAK",
     "TRY",
     "EXCEPT",
+    "CONTINUE",
 
     "INT",
     "STR",

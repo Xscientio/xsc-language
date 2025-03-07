@@ -10,16 +10,39 @@ int total_tokens;
 
 
 
+
 void variable_initilize_parser(){
+     sel_token++;
+    if(tokens_stored[sel_token].subtype == USR_IDENTIFIER){
+        sel_token++;
+        if (tokens_stored[sel_token].subtype == EQUAL){
+            sel_token++;
+            if(tokens_stored[sel_token].subtype==USR_INTEGER){
+                for (int i =sel_token; tokens_stored[i].subtype ==USR_INTEGER;i++){
+                        sel_token ++;
+                }
+                
 
-        if (tokens_stored[sel_token].type==KEYWORD){
+            }else if (tokens_stored[sel_token].subtype==USR_STRING){
+                
 
+            }else if (tokens_stored[sel_token].subtype==USR_IDENTIFIER){
+
+            }
+        }else if(tokens_stored[sel_token].subtype==COLON){
+
+        }else{
+            printf("Error You missed something");
         }
+    }
+
 }
 
 
 void keyword_distributor(){
-    // print_tokens(tokens_stored,total_tokens);
+    if (tokens_stored[sel_token].subtype == INT || STR){
+        variable_initilize_parser();
+    }
 }
 
 
@@ -29,9 +52,12 @@ print_tokens(tokens,token_count);
 tokens_stored=tokens;
 total_tokens =token_count;
 for (int i =0; i<token_count;i++){
-    if(tokens[i].type==KEYWORD){
+
+    if(tokens_stored[i].type==KEYWORD){
         keyword_distributor();
+
     }
+      
 }
 sel_token++;
 
