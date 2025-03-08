@@ -11,6 +11,7 @@
         "token_value.h": "c",
         "stdbool.h": "c",
         "debug.h": "c",
-        "parsing.h": "c"
+        "parsing.h": "c",
+        "type_traits": "c"
     }
 }

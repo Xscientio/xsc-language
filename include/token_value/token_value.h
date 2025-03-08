@@ -105,3 +105,6 @@ typedef struct
     
 }TokensStored;
 
+
+extern TokensStored *tokens;
+extern int token_count;

@@ -32,6 +32,7 @@ int line_no =1;
 int string_line_no =0;
 int token_reference=0;
 int token_column_reference =1;
+TokensStored *tokens ; 
 
 
 
@@ -485,7 +486,7 @@ void core_tokenizer(char *ptr_src_data){
 
 
     int size =0, capacity=20; // For temp_data dynamic data allocation
-    TokensStored *tokens =malloc(token_capacity * sizeof(TokensStored)); // Allocating space for tokens to be stored.
+   tokens =malloc(token_capacity * sizeof(TokensStored)); // Allocating space for tokens to be stored.
 
     char *temp_data = malloc(sizeof(char)*capacity); // This is where the tokens are temporally stored for the extraction purposes.
     
@@ -603,7 +604,7 @@ void core_tokenizer(char *ptr_src_data){
 
     //Sent for parsing
     free(temp_data);
-    core_parser(tokens,token_count);
+    return;
     
 };
 
