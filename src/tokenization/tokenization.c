@@ -467,6 +467,7 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].column=token_column_reference;
                          tokens[token_count].spaces_before=spaces_before_each_token;
                          tokens[token_count].token_no=token_count;
+                         tokens[token_count].line=line_no;
                          spaces_before_each_token=0;
 
 

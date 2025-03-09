@@ -1,4 +1,4 @@
 #pragma once
 
 
-void raw_syntax_error_form(int token_position,char * message, char*submessage);
+void raw_syntax_error_form(int token_position,char * message);

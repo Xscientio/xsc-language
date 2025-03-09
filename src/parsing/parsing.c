@@ -21,13 +21,13 @@ int variable_initalize_parser_statement(int i){
 
         }
         else{
-        raw_syntax_error_form(i,"Expected a '=' or ';' after","Missing syntax");
+        raw_syntax_error_form(i,"Expected a '=' or ';' after");
 
         }
         
 
     }else{
-        raw_syntax_error_form(i,"Expected a valid identifier after","Invalid identifier");
+        raw_syntax_error_form(i,"Expected a valid identifier after");
 
     }
  
