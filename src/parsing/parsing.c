@@ -5,19 +5,42 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 
 int variable_initalize_parser_statement(int i){
     
-    
     if(tokens[i+1].type== IDENTIFIER){
         i++;
-        if(tokens[i+1].subtype ==EQUAL){
+        if(tokens[i+1].subtype ==EQUAL ){
+            i++;
+            if(tokens[i+1].type==STRING||tokens[i+1].type==IDENTIFIER||tokens[i+1].type==INTEGER){
+            for (int k =i ;k<token_count;k++){
+            if(tokens[i+1].type ==INTEGER){
+               i++;
+
+            }else if(tokens[i+1].type ==STRING){
+               i++;
+            }else if(tokens[i+1].type ==IDENTIFIER){
+               i++;
+               
+            }
+            else if(tokens[i+1].type ==OPERATOR){
+               i++;
+            }else if(tokens[i].type ==OPERATOR&&tokens[i+1].type!=STRING&&IDENTIFIER&&INTEGER  ){
+             raw_syntax_error_form(i,"Expected an operand after");
+
+            }
+            }}
+            else{
+            raw_syntax_error_form(i,"Missing or invalid expression after");
+
+            }
+            
 
         }else if(tokens[i+1].subtype ==COLON){
             i++;
-            return i;
 
         }
         else{
