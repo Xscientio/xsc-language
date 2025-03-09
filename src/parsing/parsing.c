@@ -5,31 +5,36 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-int sel_token =0;
 
 
 
 
 
 
-void variable_initilize_parser(){
-     sel_token++;
-    if(tokens[sel_token].subtype == USR_IDENTIFIER){
-        sel_token++;
-        if (tokens[sel_token].subtype == EQUAL){
-            sel_token++;
-            if(tokens[sel_token].subtype==USR_INTEGER){
-                for(int x =sel_token; tokens[x].subtype!=COLON && x<token_count;x++){
-                
+int variable_initilize_parser(int i){
+     i++;
+    if(tokens[i].subtype == USR_IDENTIFIER){
+
+        i++;
+        if (tokens[i].subtype == EQUAL){
+
+            i++;
+            if(tokens[i].subtype==USR_INTEGER){
+
+                for(int x =i; tokens[x].subtype!=COLON && x<token_count;x++){
                 if ( tokens[x].type ==OPERATOR){
+
+
                         if(tokens[x+1].type != INTEGER && IDENTIFIER && OPERATOR ){
+
                             operand_error(x);
                         }else{
-                        sel_token ++;
+                        i ++;
+
 
                         }
                 }else if(tokens[x].subtype ==USR_INTEGER){
-                        sel_token ++;
+                        i ++;
 
                 }
                 else{
@@ -40,26 +45,29 @@ void variable_initilize_parser(){
                 }
                 
 
-            }else if (tokens[sel_token].subtype==USR_STRING){
+            }else if (tokens[i].subtype==USR_STRING){
                 
 
-            }else if (tokens[sel_token].subtype==USR_IDENTIFIER){
+            }else if (tokens[i].subtype==USR_IDENTIFIER){
 
             }
-        }else if(tokens[sel_token].subtype==COLON){
+        }else if(tokens[i].subtype==COLON){
 
         }else{ 
             printf("Error You missed something\n");
         }
     }
+    return i;
 
 }
 
 
-void keyword_distributor(){
-    if (tokens[sel_token].subtype == INT || STR){
-        variable_initilize_parser();
+int keyword_distributor(int i){
+    if (tokens[i].subtype == INT || STR){
+
+        variable_initilize_parser(i);
     }
+    return i;
 }
 
 
@@ -67,13 +75,12 @@ void keyword_distributor(){
 void core_parser(){
 
 for (int i =0; i<token_count;i++){
-
     if(tokens[i].type==KEYWORD){
-        keyword_distributor();
+        // printf("%s\n",tokens[i].value);
+      i=  keyword_distributor(i);
 
     }
       
 }
-sel_token++;
 
 }
