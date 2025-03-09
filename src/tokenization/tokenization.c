@@ -32,6 +32,7 @@ int line_no =1;
 int string_line_no =0;
 int token_reference=0;
 int token_column_reference =1;
+int spaces_before_each_token=0;
 TokensStored *tokens ; 
 
 
@@ -129,7 +130,8 @@ int tokenize_puntuators(char * ptr_src_data, int i,char* temp_data,bool is_strin
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                        spaces_before_each_token=0;
 
 
                         token_count++;
@@ -172,7 +174,8 @@ int tokenize_integers(char * ptr_src_data, int i,char* temp_data,bool is_string,
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         spaces_before_each_token=0;
 
 
                         token_count++;
@@ -234,7 +237,9 @@ int tokenize_operators(char * ptr_src_data, int i,char* temp_data,bool is_string
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
 
 
                         token_count++;
@@ -283,7 +288,9 @@ int tokenize_keywords(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
 
 
                         token_count++;
@@ -331,7 +338,9 @@ int tokenize_functions(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
                         
 
                         token_count++;
@@ -369,7 +378,9 @@ int tokenize_identifiers(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
 
 
                         token_count++;
@@ -413,7 +424,9 @@ int tokenize_strings(char * ptr_src_data, int i,char* temp_data,int size,TokensS
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
 
                     // printf("STRINGS %s\n",temp_data);
                         token_count++;
@@ -452,7 +465,9 @@ int tokenize_faulty_tokens(char* temp_data,int size,TokensStored *tokens){
                          tokens[token_count].start_point=token_reference-strlen(temp_data);
                          tokens[token_count].end_point=token_reference-1;
                          tokens[token_count].column=token_column_reference;
-
+                         tokens[token_count].spaces_before=spaces_before_each_token;
+                         tokens[token_count].token_no=token_count;
+                         spaces_before_each_token=0;
 
 
                     // printf("FAULTY TOKENS %s\n",temp_data);
@@ -511,6 +526,7 @@ void core_tokenizer(char *ptr_src_data){
         // Omits spaces
          if(ptr_src_data[i]==' '&&!is_string){
             size=0;
+            spaces_before_each_token++;
             continue;
         }
 

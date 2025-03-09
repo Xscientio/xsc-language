@@ -102,6 +102,8 @@ typedef struct
     int length ;
     int start_point;
     int end_point;
+    int spaces_before;
+    int token_no;
     
 }TokensStored;
 
