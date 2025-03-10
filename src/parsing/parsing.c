@@ -8,6 +8,15 @@
 #include <stdbool.h>
 
 
+int  func_use_parse(int i){
+
+
+
+
+}
+
+
+
 
 int variable_initalize_parser_statement(int i){
     
@@ -16,23 +25,28 @@ int variable_initalize_parser_statement(int i){
         if(tokens[i+1].subtype ==EQUAL ){
             i++;
             if(tokens[i+1].type==STRING||tokens[i+1].type==IDENTIFIER||tokens[i+1].type==INTEGER){
-            for (int k =i ;k<token_count;k++){
-            if(tokens[i+1].type ==INTEGER){
-               i++;
+                for (int k=i;k<token_count;k++){
+                if(tokens[i+1].type==INTEGER ||tokens[i+1].type==STRING ){
+                    i++;
+                }
+                else if(tokens[i+1].type==COLON){
+                    break;
+                    i++;
+                    return i;
+                } else if(tokens[i+1].type==OPERATOR){
+                    
+                     i++;
+                    if(tokens[i+1].type!=INTEGER && tokens[i+1].type!=IDENTIFIER&&tokens[i+1].type!=STRING){
+                         raw_syntax_error_form(i,"Expected an operand after");
+                        
+                    }
 
-            }else if(tokens[i+1].type ==STRING){
-               i++;
-            }else if(tokens[i+1].type ==IDENTIFIER){
-               i++;
-               
-            }
-            else if(tokens[i+1].type ==OPERATOR){
-               i++;
-            }else if(tokens[i].type ==OPERATOR&&tokens[i+1].type!=STRING&&IDENTIFIER&&INTEGER  ){
-             raw_syntax_error_form(i,"Expected an operand after");
+                } else{
+                    i++;
+                }
 
-            }
-            }}
+                }
+          }
             else{
             raw_syntax_error_form(i,"Missing or invalid expression after");
 
@@ -63,7 +77,7 @@ return i;
 int keyword_distributor(int i){
 
 
-if(tokens[i].subtype == INT ||STR){
+if(tokens[i].subtype == INT ||tokens[i].subtype ==STR){
     variable_initalize_parser_statement(i);
 }
 
